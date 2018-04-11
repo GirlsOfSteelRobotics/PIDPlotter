@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jcommon-1.0.23.jar" sourcepath="lib/jfreechart-1.0.19/source">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/DualAxisDemo1/lib/jfreechart-1.0.19/javadoc/index.html!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar" sourcepath="lib/jfreechart-1.0.19/source">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/DualAxisDemo1/lib/jfreechart-1.0.19/javadoc/index.html!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
