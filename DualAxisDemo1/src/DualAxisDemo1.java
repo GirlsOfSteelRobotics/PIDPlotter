@@ -7,7 +7,11 @@
 
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -28,6 +32,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.title.CompositeTitle;
 import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.ApplicationFrame;
@@ -41,6 +46,13 @@ import org.jfree.ui.RefineryUtilities;
  */
 public class DualAxisDemo1 extends ApplicationFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4918776883516926733L;
+	public JFreeChart chart;
+	public static DefaultCategoryDataset publicDataset;
+	
     /**
      * Creates a new demo instance.
      *
@@ -49,7 +61,7 @@ public class DualAxisDemo1 extends ApplicationFrame {
     public DualAxisDemo1(String title) {
         super(title);
         JPanel chartPanel = createDemoPanel();
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        chartPanel.setPreferredSize(new java.awt.Dimension(1000, 500));
         setContentPane(chartPanel);
     }
 
@@ -106,6 +118,8 @@ public class DualAxisDemo1 extends ApplicationFrame {
         dataset.addValue(4.0, series3, category7);
         dataset.addValue(3.0, series3, category8);
 
+        publicDataset = dataset;
+        
         return dataset;
 
     }
@@ -151,9 +165,9 @@ public class DualAxisDemo1 extends ApplicationFrame {
      *
      * @return The chart.
      */
-    private static JFreeChart createChart() {
+    private JFreeChart createChart() {
         // create the chart...
-        JFreeChart chart = ChartFactory.createBarChart(
+    	chart = ChartFactory.createLineChart(
             "DualAxisDemo1",          // chart title
             "Category",               // domain axis label
             "Value",                  // range axis label
@@ -164,6 +178,7 @@ public class DualAxisDemo1 extends ApplicationFrame {
             false                     // URL generator?  Not required...
         );
 
+        // TODO: Add XYPolygonAnnotation for the trapezoid shape dictated by acceleration and cruising velocity
 
         // get a reference to the plot for further customisation...
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -207,9 +222,8 @@ public class DualAxisDemo1 extends ApplicationFrame {
      *
      * @return A panel.
      */
-    public static JPanel createDemoPanel() {
-        JFreeChart chart = createChart();
-        return new ChartPanel(chart);
+    public JPanel createDemoPanel() {
+        return new ChartPanel(createChart());
     }
 
     /**
@@ -223,6 +237,16 @@ public class DualAxisDemo1 extends ApplicationFrame {
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
+
+        ActionListener listener = new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                demo.chart.addSubtitle(new TextTitle("New subtitle"));
+                publicDataset.addValue(5.5, "S3", "Category 8");
+            }
+        };
+        Timer tim = new Timer(5000, listener);
+        tim.setRepeats(false);
+        tim.start();
     }
 
 }
