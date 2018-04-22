@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -39,7 +40,13 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import edu.wpi.first.networktables.ConnectionNotification;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 public class PIDPlotter {
+	private static final String PLOTTER_TABLE_NAME = "plotter";
+	
 	private enum ConnStatus {
 		Disconnected, Connecting, Connected
 	}
@@ -47,10 +54,12 @@ public class PIDPlotter {
 	private JFrame frame;
 	private JTextField teamNum;
 	private JTextField txtStatus;
+	private JButton btnConnect;
 	private JFreeChart chart;
 	private JFileChooser fileChooser;
 	private XYSeriesCollection dataset;
 	private ConnStatus status;
+	private NetworkTable table;
 
 	// Labels for the two series of plotted data
 	private final static String velocityKey = "Velocity";
@@ -92,7 +101,7 @@ public class PIDPlotter {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the user interface, including some of the button behaviors.
 	 */
 	private void initializeUI() {
 		/*
@@ -115,13 +124,41 @@ public class PIDPlotter {
 		 */
 		SwingWorker<String, Void> connector = new SwingWorker<String, Void>() {
 			@Override
-			public String doInBackground() {
-				boolean exists = false;
-				while (!exists) {
-						File file = new File("/tmp/exists");
-						exists = file.exists();
+			public String doInBackground() throws Exception {
+				System.out.println("In doInBackground");
+				String hostname = null;
+				int teamNumInt = 0;
+				if (teamNum == null || teamNum.getText().isEmpty()) {
+					throw new Exception("No team number or roboRIO hostname entered");
 				}
-				return "Connected to roborio-3504-frc.local";
+				try {
+					teamNumInt = Integer.parseInt(teamNum.getText());
+				} catch (NumberFormatException e) {
+					// The user entered something that wasn't an integer, so let's assume
+					// they entered the entire host name or an IP address
+					hostname = teamNum.getText();
+				}
+				System.out.println("Calling getDefault");
+				NetworkTableInstance inst = NetworkTableInstance.getDefault();
+				table = inst.getTable(PLOTTER_TABLE_NAME);
+				System.out.println("Calling startClient");
+				if (teamNumInt > 0)
+					inst.startClientTeam(teamNumInt);
+				else
+					inst.startClient(hostname);
+				System.out.println("Returned from startClient");
+				inst.addConnectionListener((ConnectionNotification notice) -> {
+					if (notice.connected) {
+						status = ConnStatus.Connected;
+						txtStatus.setText("Connected to " + notice.conn.remote_ip);
+					} else {
+						status = ConnStatus.Disconnected;
+						txtStatus.setText("Disconnected");
+						btnConnect.setEnabled(true);
+					}
+				}, /*immediateNotify*/ true);
+				
+				return "Connected to " + hostname;
 			}
 
 			@Override
@@ -129,14 +166,14 @@ public class PIDPlotter {
 				String msg = null;
 				try {
 					msg = get(10, TimeUnit.MILLISECONDS);
-					status = ConnStatus.Connected;
 				} catch (InterruptedException ignore) {
 				} catch (TimeoutException ignore) {
-				} catch (java.util.concurrent.ExecutionException e) {
+				} catch (ExecutionException e) {
 					Throwable cause = e.getCause();
 					msg = "Failed to connect: " + ((cause != null) ? cause.getMessage() : e.getMessage());
 					status = ConnStatus.Disconnected;
-					//btnConnect.setEnabled(true);
+					btnConnect.setEnabled(true);
+					e.printStackTrace();
 				}
 				txtStatus.setText(msg);
 			}
@@ -164,7 +201,7 @@ public class PIDPlotter {
 		topPanel.add(teamNum);
 		teamNum.setColumns(5);
 
-		JButton btnConnect = new JButton("Connect");
+		btnConnect = new JButton("Connect");
 		btnConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnConnect.setEnabled(false);
@@ -189,7 +226,7 @@ public class PIDPlotter {
 		txtStatus.setBackground(UIManager.getColor("Panel.background"));
 		txtStatus.setBorder(BorderFactory.createEmptyBorder());
 		txtStatus.setText("Disconnected");
-		txtStatus.setColumns(20);
+		txtStatus.setColumns(40);
 		topPanel.add(txtStatus);
 
 		JPanel bottomPanel = new JPanel();
