@@ -7,36 +7,42 @@
 
 package org.usfirst.frc.team3504.robot;
 
+import org.usfirst.frc.team3504.robot.commands.PIDControl;
+import org.usfirst.frc.team3504.robot.commands.ZeroPosition;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
+	// Create the joy stick object in slot 0, the top-most listed in the driver's station UI
+	private Joystick joystick = new Joystick(0);
 
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
+	/**
+	 * Create the operator interface (OI), the definition of joy sticks and assignment of buttons to Commands.
+	 * Call this from Robot.RobotInit() only after creating all subsystems to avoid NullPointerExceptions.
+	 */
+	public OI() {
+		// Define a couple of buttons to run the motor under PID control for testing PID parameters
 
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
+		// Toggle between manual drive with the joy stick versus automatic control via the PID controller
+		Button startStopPID = new JoystickButton(joystick, 1);
+		startStopPID.toggleWhenPressed(new PIDControl());
+		
+		Button zeroPosition = new JoystickButton(joystick, 2);
+		zeroPosition.whenPressed(new ZeroPosition());
+	}
 
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
+	/**
+	 * Read and return the joy stick position to be used to set the motor speed 
+	 */
+	public double getStickPosition() {
+		// Negate the Y axis value because pushing the stick forward returns negative values.
+		// (This makes sense when joy sticks are used in airplanes, with forward pointing the plane downward)
+		return -joystick.getY();
+	}
 }
