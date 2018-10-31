@@ -33,6 +33,11 @@ public class Robot extends TimedRobot {
 
 		// Construct the operator interface AFTER all subsystems are created
 		oi = new OI();
+		
+		// Initialize the interface by setting up all the Smart Dashboard input/output fields
+		oi.initInterface(Robot.motor.getSavedProportional(),
+				Robot.motor.getSavedIntegral(),
+				Robot.motor.getSavedDerivative());
 	}
 
 	/**
@@ -87,6 +92,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		// Also update the current position display on the Smart Dashboard every time through the loop
+		oi.displayPosition(motor.getCurrentRotations());
 	}
 
 	/**
@@ -94,5 +102,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+
+	/**
+	 * This function is called periodically during all modes.
+	 */
+	@Override
+	public void robotPeriodic() {
 	}
 }

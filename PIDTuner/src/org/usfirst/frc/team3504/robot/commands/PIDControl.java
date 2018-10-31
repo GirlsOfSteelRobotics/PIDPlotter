@@ -15,7 +15,7 @@ import org.usfirst.frc.team3504.robot.Robot;
  * Stopping this command will cancel PID control.
  */
 public class PIDControl extends Command {
-	
+		
 	public PIDControl() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.motor);
@@ -24,12 +24,17 @@ public class PIDControl extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		double rotations = 3.0;
-		System.out.printf("Starting PID control with a target of %.2f rotations\n", rotations);
-		Robot.motor.updatePIDConstants();
+		double rotations = Robot.oi.getTarget();
+		double kP = Robot.oi.getProportional();
+		double kI = Robot.oi.getIntegral();
+		double kD = Robot.oi.getDerivative();
+		System.out.printf("Starting PID control with a target of %.2f rotations, PID constants (%.5f, %.5f, %.5f)\n", 
+				rotations, kP, kI, kD);
+		Robot.oi.displayMode("PID Control");
+		Robot.motor.updatePIDConstants(kP, kI, kD);
 		Robot.motor.setTargetPosition(rotations);
 	}
-
+	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
@@ -46,6 +51,7 @@ public class PIDControl extends Command {
 	@Override
 	protected void end() {
 		System.out.println("Stopping PID control");
+		Robot.oi.displayMode("");
 		Robot.motor.stop();
 	}
 

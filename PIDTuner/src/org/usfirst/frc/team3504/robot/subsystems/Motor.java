@@ -10,6 +10,7 @@ package org.usfirst.frc.team3504.robot.subsystems;
 import org.usfirst.frc.team3504.robot.RobotMap;
 import org.usfirst.frc.team3504.robot.commands.ManualControl;
 
+import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -31,8 +32,8 @@ public class Motor extends Subsystem {
 	// Store the most recent target in native units so we can later decide if we've achieved the goal yet
 	private int targetNativeUnits;
 
-	// What is the allowable error, as a percentage, before considering the mechanism at the intended position
-	private final static double ALLOWABLE_ERROR = 0.05;
+	// What is the allowable error, as a percentage, before considering the mechanism at the intended position?
+	//private final static double ALLOWABLE_ERROR = 0.05;
 	
 	/**
 	 * Construct the Motor object by creating a motor controller object
@@ -53,8 +54,7 @@ public class Motor extends Subsystem {
 		setDefaultCommand(new ManualControl());
 	}
 
-	// Put methods for controlling this subsystem
-	// here. Call these from Commands.
+	// Put methods for controlling this subsystem here. Call these from Commands.
 
 	/**
 	 * Stop the motor (used when exiting manual control)
@@ -82,15 +82,35 @@ public class Motor extends Subsystem {
 	/**
 	 * Set the PID parameters (the proportional, integral, and derivative constants).
 	 * This sample doesn't use velocity control, only position control, so forward feedback is zeroed. 
-	 * The values are read from the fields on the driver's station, 
+	 * The values should be read from the fields on the driver's station, 
 	 * making it easy to change them while tuning. 
 	 */
-	public void updatePIDConstants() {
-		// Hard code some constants for now
-		talon.config_kP(PID_SLOT_INDEX, 0.01);
-		talon.config_kD(PID_SLOT_INDEX, 0.0);
-		talon.config_kI(PID_SLOT_INDEX, 0.0);
+	public void updatePIDConstants(double kP, double kI, double kD) {
+		talon.config_kP(PID_SLOT_INDEX, kP);
+		talon.config_kI(PID_SLOT_INDEX, kI);
+		talon.config_kD(PID_SLOT_INDEX, kD);
 		talon.config_kF(PID_SLOT_INDEX, 0.0);
+	}
+	
+	/**
+	 * Get the current Proportional constant from the motor controller (used as the initial value in the UI)
+	 */
+	public double getSavedProportional() {
+		return talon.configGetParameter(ParamEnum.eProfileParamSlot_P, PID_SLOT_INDEX);
+	}
+
+	/**
+	 * Get the current Integral constant from the motor controller (used as the initial value in the UI)
+	 */
+	public double getSavedIntegral() {
+		return talon.configGetParameter(ParamEnum.eProfileParamSlot_I, PID_SLOT_INDEX);
+	}
+
+	/**
+	 * Get the current Derivative constant from the motor controller (used as the initial value in the UI)
+	 */
+	public double getSavedDerivative() {
+		return talon.configGetParameter(ParamEnum.eProfileParamSlot_D, PID_SLOT_INDEX);
 	}
 
 	/**
@@ -102,10 +122,21 @@ public class Motor extends Subsystem {
 	 * @return Equivalent position in native encoder units
 	 */
 	private int rotationsToNativeUnits(double rotations) {
-		// CTRE magnetic encoder in relative (quadrature) mode has 4096 native units per rotation.
-		// There's no gearing between the encoder and output shaft on our test board, so the ratio is 1:1.
 		// Perform the math with floating point numbers, then round to the nearest integer number of units.		
-		return (int)Math.round(rotations * 4096.0 * 1.0);
+		return (int)Math.round(rotations * RobotMap.UNITS_PER_ROTATION * RobotMap.GEAR_RATIO);
+	}
+	
+	/**
+	 * Translate a number of native units of the encoder to output rotations.
+	 * Requires a knowledge of the encoder specifications (native units per rotation)
+	 * and of any gearing that's applied between the encoder and final output stage of the gear box.
+	 * 
+	 * @param units Encoder position measured in native units of the encoder
+	 * @return Equivalent position in output shaft rotations
+	 */
+	private double nativeUnitsToRotations(int units) {
+		// Perform the math with floating point numbers, then round to the nearest integer number of units.		
+		return (double)units / RobotMap.UNITS_PER_ROTATION / RobotMap.GEAR_RATIO;
 	}
 	
 	/**
@@ -118,9 +149,24 @@ public class Motor extends Subsystem {
 		talon.set(ControlMode.Position, targetNativeUnits);
 	}
 	
+	/**
+	 * Read the encoder to learn the current position of the motor in output rotations.
+	 * 
+	 * @return Position of the output shaft measured in rotations
+	 */
+	public double getCurrentRotations() {
+		return nativeUnitsToRotations(talon.getSelectedSensorPosition());
+	}
+	
+	/**
+	 * Determine if the PID controller has successfully moved the motor to the target position yet.
+	 * 
+	 * @return True if the current position is within ALLOWABLE_ERROR percentage of the target position 
+	 */
 	public boolean isPIDFinished() {
-		double error = Math.abs(targetNativeUnits - talon.getSelectedSensorPosition());
-		double percentError = (targetNativeUnits - error) / targetNativeUnits;
-		return false; //percentError <= ALLOWABLE_ERROR;
+		//double error = Math.abs(targetNativeUnits - talon.getSelectedSensorPosition());
+		//double percentError = (targetNativeUnits - error) / targetNativeUnits;
+		//return percentError <= ALLOWABLE_ERROR;
+		return false;
 	}
 }
