@@ -58,6 +58,8 @@ public class OI {
 	public void initInterface(double kP, double kI, double kD) {
 		displayMode("Disabled");
 		displayPosition(0.0);
+		displaySpeed(0);
+		displayError(0);
 		displayInstructions();
 		setTarget(DEFAULT_TARGET);
 		setProportional(kP);
@@ -70,6 +72,20 @@ public class OI {
 	 */
 	public void displayPosition(double rotations) {
 		SmartDashboard.putString("Current Rotations", String.format("%.3f", rotations));
+	}
+	
+	/**
+	 * Display the current speed in native sensor units per 100 milliseconds
+	 */
+	public void displaySpeed(int speed) {
+		SmartDashboard.putNumber("Current Speed", speed);
+	}
+	
+	/**
+	 * Display the error (target - current position) in rotations
+	 */
+	public void displayError(double error) {
+		SmartDashboard.putNumber("Current Error", error);
 	}
 	
 	/**

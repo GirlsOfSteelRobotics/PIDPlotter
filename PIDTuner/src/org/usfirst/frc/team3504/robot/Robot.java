@@ -95,6 +95,8 @@ public class Robot extends TimedRobot {
 
 		// Also update the current position display on the Smart Dashboard every time through the loop
 		oi.displayPosition(motor.getCurrentRotations());
+		oi.displaySpeed(motor.getCurrentSpeed());
+		oi.displayError(motor.getCurrentError());
 	}
 
 	/**

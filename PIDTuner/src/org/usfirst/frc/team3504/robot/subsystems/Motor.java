@@ -159,6 +159,24 @@ public class Motor extends Subsystem {
 	}
 	
 	/**
+	 * Read the encoder to learn the current speed of the motor in native units per 100ms.
+	 * 
+	 * @return Speed of the output shaft measured in native encoder units per 100ms
+	 */
+	public int getCurrentSpeed() {
+		return talon.getSelectedSensorVelocity();
+	}
+
+	/**
+	 * Return the current error, the difference between the target and current position
+	 * 
+	 * @return The current error in native encoder units
+	 */
+	public double getCurrentError() {
+		return nativeUnitsToRotations(targetNativeUnits - talon.getSelectedSensorPosition());
+	}
+	
+	/**
 	 * Determine if the PID controller has successfully moved the motor to the target position yet.
 	 * 
 	 * @return True if the current position is within ALLOWABLE_ERROR percentage of the target position 
