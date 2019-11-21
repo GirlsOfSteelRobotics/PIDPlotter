@@ -1,0 +1,92 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Set Offset" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="672" y="308"/>
+	</widget>
+	<widget field="Motor Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="21"/>
+	</widget>
+	<widget field="Front Right Drive Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="389" y="9"/>
+	</widget>
+	<widget field="Front Right Drive Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="453" y="59"/>
+	</widget>
+	<widget field="Front Left Drive Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="463" y="94"/>
+	</widget>
+	<widget field="Front Left Drive Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="465" y="134"/>
+	</widget>
+	<widget field="Back Right Drive Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="446" y="172"/>
+	</widget>
+	<widget field="Back Right Drive Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="453" y="230"/>
+	</widget>
+	<widget field="Back Left Drive Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="336" y="273"/>
+	</widget>
+	<widget field="Back Left Drive Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="242" y="170"/>
+	</widget>
+	<widget field="Front Right Swerve Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="242" y="136"/>
+	</widget>
+	<widget field="Front Right Swerve Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="242" y="102"/>
+	</widget>
+	<widget field="Front Left Swerve Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="242" y="68"/>
+	</widget>
+	<widget field="Front Left Swerve Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="242" y="34"/>
+	</widget>
+	<widget field="Back Right Swerve Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="186" y="202"/>
+	</widget>
+	<widget field="Back Right Swerve Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="172" y="0"/>
+	</widget>
+	<widget field="Back Left Swerve Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="63" y="275"/>
+	</widget>
+	<widget field="Back Left Swerve Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="160"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="803" y="127"/>
+		<width>804</width>
+		<height>426</height>
+		<property name="Camera Choice" value=""/>
+	</static-widget>
+	<widget field="Auto mode" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field="driveByJoystick?" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="649" y="21"/>
+	</widget>
+	<widget field="Drivetrain" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="0" y="203"/>
+	</widget>
+	<widget field="Right Back" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="59" y="139"/>
+	</widget>
+	<widget field="Left Back" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="69" y="120"/>
+	</widget>
+	<widget field="Left Front" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="69" y="99"/>
+		<height>20</height>
+	</widget>
+	<widget field="Right Front" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="53" y="62"/>
+		<height>28</height>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
