@@ -1,5 +1,14 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Current Error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.LinePlot">
+		<location x="234" y="8"/>
+		<width>851</width>
+		<height>670</height>
+	</widget>
+	<widget field="Current Rotations" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="2" y="40"/>
+		<property name="Editable" value="false"/>
+	</widget>
 	<widget field="Derivative" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="252"/>
 	</widget>
@@ -16,17 +25,12 @@
 		<location x="0" y="168"/>
 		<width>388</width>
 	</widget>
-	<widget field="Current Error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="147"/>
-	</widget>
 	<widget field="Current Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="126"/>
-	</widget>
-	<widget field="Current Rotations" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="105"/>
+		<location x="18" y="60"/>
+		<property name="Editable" value="false"/>
 	</widget>
 	<widget field="Mode" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="21" y="84"/>
+		<location x="20" y="3"/>
 	</widget>
 </dashboard>
 <live-window>
