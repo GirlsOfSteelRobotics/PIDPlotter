@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Motor extends Subsystem {
 	// Configure the maximum speed of the motor so the humans can count rotations
-	private final static double MAX_PERCENT_OUT = 0.3;
+	private final static double MAX_PERCENT_OUT = 0.7;
 
 	// All methods that tell the motor controller what to do are encapsulated in this class, 
 	// so keep this variable private! 

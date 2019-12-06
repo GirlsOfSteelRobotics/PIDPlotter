@@ -50,7 +50,7 @@ public class OI {
 	public double getStickPosition() {
 		// Negate the Y axis value because pushing the stick forward returns negative values.
 		// (This makes sense when joysticks are used in airplanes, with forward pointing the plane downward)
-		return -joystick.getY();
+		return -joystick.getY()*Math.abs(joystick.getY());
 	}
 	
 	/**
