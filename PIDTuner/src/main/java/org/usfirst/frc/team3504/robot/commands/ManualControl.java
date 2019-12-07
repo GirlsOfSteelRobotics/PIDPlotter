@@ -26,7 +26,7 @@ public class ManualControl extends Command {
 	protected void execute() {
 		// Conveniently, the joy stick position is returned in the range -1.0 to +1.0,
 		// same as is needed for setting the speed of the motor.
-		Robot.motor.setSpeed(Robot.oi.getStickPosition());
+		Robot.motor.setSpeed(Robot.oi.getSpeedFromJoystick());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

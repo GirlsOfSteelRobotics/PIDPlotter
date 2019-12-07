@@ -47,10 +47,15 @@ public class OI {
 	/**
 	 * Read and return the joystick position to be used to set the motor speed 
 	 */
-	public double getStickPosition() {
+	public double getSpeedFromJoystick() {
 		// Negate the Y axis value because pushing the stick forward returns negative values.
 		// (This makes sense when joysticks are used in airplanes, with forward pointing the plane downward)
-		return -joystick.getY()*Math.abs(joystick.getY());
+		double rawValue = -joystick.getY();
+		// Scale the joystick values to make the controls less touchy.
+		// With this curve in place, the joystick needs to move to about 0.8 to result in a speed of 0.5.
+		// That provides more range of motion for the slower speeds.
+		// Take the absolute value of the first factor to ensure negative joystick values result in negative speeds.
+		return Math.abs(rawValue)*rawValue*rawValue*rawValue;
 	}
 	
 	/**
