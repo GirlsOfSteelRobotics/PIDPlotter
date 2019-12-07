@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * The motor and position encoder subsystem
  */
 public class Motor extends Subsystem {
+	// Configure the maximum speed of the motor so the humans can count rotations
+	private final static double MAX_PERCENT_OUT = 0.7;
+
 	// All methods that tell the motor controller what to do are encapsulated in this class, 
 	// so keep this variable private! 
 	private WPI_TalonSRX talon;
@@ -42,7 +45,9 @@ public class Motor extends Subsystem {
 		talon = new WPI_TalonSRX(RobotMap.TALON_ID);
 		// Our test board has a CTRE magnetic encoder as one stage of the VEX VersaPlanetary gear box
 		talon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-		talon.setSensorPhase(true);
+		talon.setSensorPhase(false);
+		talon.configPeakOutputForward(MAX_PERCENT_OUT);
+		talon.configPeakOutputReverse(-MAX_PERCENT_OUT);
 	}
 
 	/** 

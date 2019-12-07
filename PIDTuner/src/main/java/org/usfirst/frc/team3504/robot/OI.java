@@ -25,6 +25,8 @@ public class OI {
 	
 	// Create the joystick object in slot 0, the top-most listed in the driver's station UI
 	private Joystick joystick = new Joystick(0);
+	Button startStopPID;
+	Button zeroPosition;
 
 	/**
 	 * Create the operator interface (OI), the definition of joysticks and assignment of buttons to Commands.
@@ -34,11 +36,11 @@ public class OI {
 		// Define a couple of buttons to run the motor under PID control for testing PID parameters
 
 		// Toggle between manual drive with the joy stick versus automatic control via the PID controller
-		Button startStopPID = new JoystickButton(joystick, 1);
+		startStopPID = new JoystickButton(joystick, 1);
 		startStopPID.toggleWhenPressed(new PIDControl());
 		
 		// Set the current position reading back to zero
-		Button zeroPosition = new JoystickButton(joystick, 2);
+		zeroPosition = new JoystickButton(joystick, 2);
 		zeroPosition.whenPressed(new ZeroPosition());
 	}
 
@@ -48,7 +50,7 @@ public class OI {
 	public double getStickPosition() {
 		// Negate the Y axis value because pushing the stick forward returns negative values.
 		// (This makes sense when joysticks are used in airplanes, with forward pointing the plane downward)
-		return -joystick.getY();
+		return -joystick.getY()*Math.abs(joystick.getY());
 	}
 	
 	/**

@@ -1,45 +1,68 @@
 <xml version="1.0">
 <dashboard>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="17" y="10"/>
-		<width>238</width>
-		<height>177</height>
-		<property name="Camera Choice" value="Driver Camera"/>
-	</static-widget>
+	<widget field="Reminder:" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="56" y="323"/>
+		<width>363</width>
+	</widget>
+	<widget field="Target Rotations" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="26" y="155"/>
+	</widget>
+	<widget field="Proportional" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="45" y="226"/>
+	</widget>
+	<widget field="Current Error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="45" y="50"/>
+	</widget>
+	<widget field="Current Rotations" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="26"/>
+	</widget>
+	<widget field="Mode" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="82" y="129"/>
+	</widget>
+	<widget field="Derivative" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="57" y="280"/>
+	</widget>
+	<widget field="Integral" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="68" y="252"/>
+	</widget>
+	<widget field="Current Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="39" y="74"/>
+	</widget>
 </dashboard>
 <live-window>
-	<widget field="Camera" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="177"/>
-	</widget>
-	<widget field="Lidar" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="154"/>
-	</widget>
 	<widget field="Motor" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="131"/>
-	</widget>
-	<widget field="Blinkin" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<location x="0" y="108"/>
+		<location x="0" y="88"/>
 	</widget>
 	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
-		<widget field="Counter[0]" type="Counter" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+		<widget field="Counter[0]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
 			<location x="0" y="0"/>
 			<height>0</height>
 			<width>0</width>
 		</widget>
-		<widget field="Counter[0]" type="Counter" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
+		<widget field="Counter[0]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SingleNumberDisplay">
 			<location x="0" y="0"/>
 			<height>0</height>
 			<width>0</width>
 		</widget>
-		<widget field="Talon SRX [1]" type="Speed Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
-			<location x="6" y="16"/>
-			<height>45</height>
-			<width>297</width>
+		<widget field="Talon SRX [1]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
-		<widget field="DigitalInput[2]" type="Digital Input" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
-			<location x="6" y="61"/>
-			<height>20</height>
-			<width>297</width>
+		<widget field="Talon SRX [1]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalInput[2]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
+		</widget>
+		<widget field="DigitalInput[2]" type="Table" class="edu.wpi.first.smartdashboard.livewindow.elements.DigitalInputDisplay">
+			<location x="0" y="0"/>
+			<height>0</height>
+			<width>0</width>
 		</widget>
 		<location x="0" y="0"/>
 		<width>309</width>
